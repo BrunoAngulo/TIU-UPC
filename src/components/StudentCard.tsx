@@ -117,20 +117,14 @@ export default function StudentCard({ profile }: StudentCardProps) {
               <button
                 type="button"
                 className={styles.cancelBtn}
-                onPointerDown={(e) => {
-                  e.preventDefault();
-                  cancel();
-                }}
+                onClick={cancel}
               >
                 Cancelar
               </button>
               <button
                 type="button"
                 className={styles.saveBtn}
-                onPointerDown={(e) => {
-                  e.preventDefault();
-                  saveAndClose();
-                }}
+                onClick={saveAndClose}
               >
                 Guardar
               </button>
