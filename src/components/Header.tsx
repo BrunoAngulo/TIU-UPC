@@ -5,8 +5,8 @@ export default function Header() {
     <header className={styles.header}>
       <button className={styles.backButton} aria-label="Volver">
         <svg
-          width="14"
-          height="22"
+          width="10"
+          height="16"
           viewBox="0 0 14 22"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@ export default function Header() {
           <path
             d="M12 2L3 11L12 20"
             stroke="#fd393b"
-            strokeWidth="4"
+            strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
