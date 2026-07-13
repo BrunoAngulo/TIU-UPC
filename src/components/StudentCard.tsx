@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import type { UserProfile } from "@/config/profile";
 import styles from "./StudentCard.module.css";
 
@@ -15,12 +15,19 @@ export default function StudentCard({ profile }: StudentCardProps) {
   const [tempFirst, setTempFirst] = useState(firstName);
   const [tempLast, setTempLast] = useState(lastName);
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (showModal) {
-      // Small delay to let the modal render before focusing
-      setTimeout(() => firstInputRef.current?.focus(), 100);
+      setTimeout(() => firstInputRef.current?.focus(), 150);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [showModal]);
 
   const openModal = () => {
@@ -29,15 +36,25 @@ export default function StudentCard({ profile }: StudentCardProps) {
     setShowModal(true);
   };
 
-  const saveAndClose = () => {
-    setFirstName(tempFirst);
-    setLastName(tempLast);
+  const saveAndClose = useCallback(() => {
+    setFirstName(tempFirst.trim() || firstName);
+    setLastName(tempLast.trim() || lastName);
     setShowModal(false);
-  };
+  }, [tempFirst, tempLast, firstName, lastName]);
 
-  const cancel = () => {
+  const cancel = useCallback(() => {
     setShowModal(false);
-  };
+  }, []);
+
+  // Close only when tapping directly on the overlay background
+  const handleOverlayClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target === overlayRef.current) {
+        cancel();
+      }
+    },
+    [cancel]
+  );
 
   return (
     <>
@@ -67,8 +84,12 @@ export default function StudentCard({ profile }: StudentCardProps) {
 
       {/* Modal para editar nombre */}
       {showModal && (
-        <div className={styles.overlay} onClick={cancel}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <div
+          ref={overlayRef}
+          className={styles.overlay}
+          onClick={handleOverlayClick}
+        >
+          <div className={styles.modal}>
             <h3 className={styles.modalTitle}>Editar nombre</h3>
 
             <label className={styles.modalLabel}>
@@ -79,7 +100,6 @@ export default function StudentCard({ profile }: StudentCardProps) {
                 type="text"
                 value={tempFirst}
                 onChange={(e) => setTempFirst(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && saveAndClose()}
               />
             </label>
 
@@ -90,7 +110,6 @@ export default function StudentCard({ profile }: StudentCardProps) {
                 type="text"
                 value={tempLast}
                 onChange={(e) => setTempLast(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && saveAndClose()}
               />
             </label>
 
@@ -98,14 +117,20 @@ export default function StudentCard({ profile }: StudentCardProps) {
               <button
                 type="button"
                 className={styles.cancelBtn}
-                onClick={cancel}
+                onPointerDown={(e) => {
+                  e.preventDefault();
+                  cancel();
+                }}
               >
                 Cancelar
               </button>
               <button
                 type="button"
                 className={styles.saveBtn}
-                onClick={saveAndClose}
+                onPointerDown={(e) => {
+                  e.preventDefault();
+                  saveAndClose();
+                }}
               >
                 Guardar
               </button>
