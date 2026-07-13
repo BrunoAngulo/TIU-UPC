@@ -1,0 +1,32 @@
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3.5vw, 22px);
+  padding: 0 4px;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(38px, 6vh, 48px);
+  width: clamp(38px, 6dvh, 48px);
+  height: clamp(38px, 6vh, 48px);
+  height: clamp(38px, 6dvh, 48px);
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(20, 20, 60, 0.06);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 3.4vh, 26px);
+  font-size: clamp(20px, 3.4dvh, 26px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #17171c;
+  text-transform: uppercase;
+}

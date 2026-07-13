@@ -1,0 +1,40 @@
+/*
+ * Anclada a las coordenadas del video: la foto grabada tiene
+ * su centro al 41% del alto y mide ~17dvh.
+ */
+.frame {
+  position: fixed;
+  top: 41vh;
+  top: 41dvh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  height: 18vh;
+  height: 18dvh;
+  aspect-ratio: 1 / 1;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Off-screen but not display:none so iOS can still activate it */
+.hiddenInput {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}

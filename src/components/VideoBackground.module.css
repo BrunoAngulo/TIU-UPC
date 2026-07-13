@@ -1,0 +1,17 @@
+/*
+ * El video debe cubrir todo el ancho de la pantalla (no limitarse
+ * al max-width del contenedor). Se usa width: 100vw para forzar
+ * ancho completo y object-fit: cover para llenar sin distorsión.
+ */
+.video {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  object-fit: cover;
+  clip-path: inset(29.5% 0 0 0);
+  z-index: 0;
+}
